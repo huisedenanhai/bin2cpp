@@ -49,12 +49,12 @@ void usage() {
 enum ArgParseState { Namespace, VarName, Indent, MaxChar, Defualt };
 
 int main(int argc, char **argv) {
-    std::string ns = "";
-    std::string name = "";
+    std::string ns;
+    std::string name;
     std::string type = "unsigned char";
-    std::string fileName = "";
-    std::string prefix = "";
-    std::string indent = "";
+    std::string fileName;
+    std::string prefix;
+    std::string indent;
     int indentCnt = 2;
     bool needTrailingZero = false;
     bool isConst = false;
@@ -135,13 +135,13 @@ int main(int argc, char **argv) {
         parseArg(argv[i]);
     }
 
-    if (fileName == "") {
+    if (fileName.empty()) {
         std::cout << "please specify input file" << std::endl;
         usage();
         return 0;
     }
 
-    if (name == "") {
+    if (name.empty()) {
         auto ci = fileName.find('.');
         name = fileName.substr(0, ci);
     }
@@ -151,12 +151,12 @@ int main(int argc, char **argv) {
         prefix = "static";
     }
     if (isConstExpr) {
-        if (prefix != "")
+        if (!prefix.empty())
             prefix += " ";
         prefix += "constexpr";
     }
     if (isConst) {
-        if (prefix != "")
+        if (!prefix.empty())
             prefix += " ";
         prefix += "const";
     }
@@ -173,14 +173,14 @@ int main(int argc, char **argv) {
     }
 
     auto pPrefix = [&]() -> std::ostream & {
-        if (prefix != "") {
+        if (!prefix.empty()) {
             return os << prefix << " ";
         }
         return os;
     };
     int charCnt = 0;
     size_t fileLength = 0;
-    bool needNamespace = ns != "";
+    bool needNamespace = !ns.empty();
     if (needNamespace) {
         os << "namespace " << ns << " {" << std::endl;
     }
