@@ -193,7 +193,7 @@ int main(int argc, char **argv) {
         }
         if (charCnt == 0) {
             os << indent;
-            charCnt += indent.size();
+            charCnt += (int)indent.size();
         }
         os << "0x" << std::hex << std::setw(2) << std::setfill('0') << (int)c
            << ",";
